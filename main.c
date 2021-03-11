@@ -12,7 +12,7 @@ void MenuInterativo(ListaAgendas *listaAgendas);
 void MenuLogin (ListaAgendas *listaAgendas);
 void MenuCreateAgenda (ListaAgendas *listaAgendas);
 
-void TestCompromisso() {
+void TestCompromisso(Agenda *agenda) {
     Compromisso *compromisso1;
 
     compromisso1 = (Compromisso*) malloc(sizeof(Compromisso));
@@ -20,12 +20,9 @@ void TestCompromisso() {
     int prioridade, ano, mes, dia, hora, duracao;
     char descricao[100];
 
-    ListaCompromissos *lista1;
-
-    lista1 = (ListaCompromissos*) malloc(sizeof(ListaCompromissos));
-
     printf("\nDigite uma descricao:  ");
-    scanf("%[^\n]%*c", descricao);
+    scanf("%s", descricao);
+//    scanf("%[^\n]%*c", descricao);
     printf("\nDigite uma prioridade:  ");
     scanf("%d", &prioridade);
     printf("\nDigite uma ano:  ");
@@ -41,27 +38,9 @@ void TestCompromisso() {
 
     tam++;
     InicializarCompromisso(compromisso1, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
-    CompListInsert(lista1, compromisso1);
+    CompListInsert(&agenda->compromissos, compromisso1);
 
-    CompListPrint(lista1);
-
-    int *prioridade_teste;
-    int new_prioridade;
-
-    printf("\nDigite a nova prioridade: ");
-    scanf("%i", &new_prioridade);
-
-    prioridade_teste = (int*) malloc(sizeof(int));
-
-    GetPrioridade(*compromisso1, prioridade_teste);
-
-    printf("Prioridade antiga: %d\n", *prioridade_teste);
-
-    SetPrioridade(compromisso1, new_prioridade);
-
-    GetPrioridade(*compromisso1, prioridade_teste);
-
-    printf("Prioridade nova: %d\n", *prioridade_teste);
+    CompListPrint(&agenda->compromissos);
 }
 
 void TestAgenda() {
@@ -90,61 +69,7 @@ void TestAgenda() {
     InicializarAgenda(agenda1, listaCompromissos, id, nome, ano);
     AgendaListInsert(listaAgendas, agenda1);
 
-    PrintAgenda(*agenda1);
-
-
-
-    Compromisso *compromisso1, *compromisso2;
-
-    compromisso1 = (Compromisso*) malloc(sizeof(Compromisso));
-    compromisso2 = (Compromisso*) malloc(sizeof(Compromisso));
-
-    int prioridade, mes, dia, hora, duracao;
-    char descricao[100];
-
-    printf("\nDigite uma descricao:  ");
-    scanf("%[^\n]%*c", descricao);
-    printf("\nDigite uma prioridade:  ");
-    scanf("%d", &prioridade);
-    printf("\nDigite uma ano:  ");
-    scanf("%d", &ano);
-    printf("\nDigite uma mes:  ");
-    scanf("%d", &mes);
-    printf("\nDigite uma dia:  ");
-    scanf("%d", &dia);
-    printf("\nDigite uma hora:  ");
-    scanf("%d", &hora);
-    printf("\nDigite uma duracao:  ");
-    scanf("%d", &duracao);
-
-    tam++;
-    InicializarCompromisso(compromisso1, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
-    CompListInsert(listaCompromissos, compromisso1);
-
-    printf("\nDigite uma descricao:  ");
-    scanf("%[^\n]%*c", descricao);
-    printf("\nDigite uma prioridade:  ");
-    scanf("%d", &prioridade);
-    printf("\nDigite uma ano:  ");
-    scanf("%d", &ano);
-    printf("\nDigite uma mes:  ");
-    scanf("%d", &mes);
-    printf("\nDigite uma dia:  ");
-    scanf("%d", &dia);
-    printf("\nDigite uma hora:  ");
-    scanf("%d", &hora);
-    printf("\nDigite uma duracao:  ");
-    scanf("%d", &duracao);
-
-    tam++;
-    InicializarCompromisso(compromisso2, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
-    CompListInsert(listaCompromissos, compromisso2);
-
-    CompListPrint(listaCompromissos);
-
-
-    AgendaListPrint(listaAgendas);
-
+    TestCompromisso(agenda1);
 
 }
 
@@ -229,7 +154,7 @@ void MenuCreateAgenda (ListaAgendas *listaAgendas) {
 
     InicializarAgenda(agenda, lista, id, nome, ano);
 
-    printf("\n\nLembre-se, seu ID é: %s", id);
+    printf("\n\nLembre-se, seu ID e: %s", id);
 
     MenuLogin(listaAgendas);
 
@@ -259,15 +184,15 @@ void MenuInicial(ListaAgendas *listaAgendas) {
 
 int main() {
 
-//    ListaAgendas *listaAgendas;
-//
-//    listaAgendas = (ListaAgendas*) malloc(sizeof (ListaAgendas));
-//
-//    MenuInicial(listaAgendas);
+    ListaAgendas *listaAgendas;
+
+    listaAgendas = (ListaAgendas*) malloc(sizeof (ListaAgendas));
+
+    MenuInicial(listaAgendas);
 
 //    TestCompromisso();
 
-    TestAgenda();
+//    TestAgenda();
 
 
 

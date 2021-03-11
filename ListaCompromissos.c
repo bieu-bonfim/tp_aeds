@@ -45,9 +45,6 @@ void CompListPrint(ListaCompromissos* lista)
     aux = lista->primeiro;
     while (aux != NULL)
     {
-        if (aux->compromisso.duracao == 0 || aux->compromisso.dia > 31) {
-            continue;
-        }
         PrintCompromisso(aux->compromisso);
         aux = aux->prox;
     }

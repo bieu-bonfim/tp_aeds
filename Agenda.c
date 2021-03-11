@@ -4,14 +4,14 @@
 
 void InicializarAgenda(Agenda* agenda, ListaCompromissos* lista, char id_prof[10], char nome[80], int ano) {
     agenda->ano = ano;
-    strcpy(agenda->id_prof, id_prof);
+    strcpy(agenda->id, id_prof);
     strcpy(agenda->nome, nome);
-    agenda->lista = *lista;
+    agenda->compromissos = *lista;
 }
 
 void PrintAgenda(Agenda agenda) {
-    printf("ID: %s\n", agenda.id_prof);
+    printf("ID: %s\n", agenda.id);
     printf("Professor: %s\n", agenda.nome);
     printf("Ano: %d\n", agenda.ano);
-    CompListPrint(&agenda.lista);
+    CompListPrint(&agenda.compromissos);
 }

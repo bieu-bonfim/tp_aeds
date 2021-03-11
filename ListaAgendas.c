@@ -7,7 +7,7 @@ int FindById(ListaAgendas *lista, Agenda *agenda, char id[10]) {
     aux = lista->primeiro;
     while (aux != NULL)
     {
-        if(id == aux->agenda.id_prof) {
+        if(id[10] == *aux->agenda.id) {
             agenda = &aux->agenda;
             return 1;
         }
@@ -24,7 +24,7 @@ int CheckId(ListaAgendas *lista, char id[10]) {
     while (aux != NULL)
     {
 
-        if(id == aux->agenda.id_prof) {
+        if(id == aux->agenda.id) {
             return 1;
         }
 
