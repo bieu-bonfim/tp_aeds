@@ -10,12 +10,12 @@ typedef struct {
     CApontador ultimo;
 } ListaCompromissos;
 
-void EmptyList(ListaCompromissos* lista);
+void CompEmptyList(ListaCompromissos* lista);
 
-int IsListEmpty(ListaCompromissos* lista);
+int CompIsListEmpty(ListaCompromissos* lista);
 
-void ListInsert(ListaCompromissos* lista, Compromisso* compromisso);
+void CompListInsert(ListaCompromissos* lista, Compromisso* compromisso);
 
-int ListRetrieve(ListaCompromissos* lista, Compromisso* compromisso);
+int CompListRetrieve(ListaCompromissos* lista, Compromisso* compromisso);
 
-void ListPrint(ListaCompromissos* lista);
+void CompListPrint(ListaCompromissos* lista);

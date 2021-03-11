@@ -19,29 +19,6 @@ int InicializarCompromisso(Compromisso* compromisso, int id, int prioridade,
     return compromisso->id;
 }
 
-long CreateId(int dia, int mes, int ano, int hora, int duracao) {
-    long id = ano;
-    int tam;
-
-    tam = log10(mes)+1;
-    id = id * pow(10, tam);
-    id += mes;
-
-    tam = log10(dia)+1;
-    id = id * pow(10, tam);
-    id += dia;
-
-    tam = log10(hora)+1;
-    id = id * pow(10, tam);
-    id += hora;
-
-    tam = log10(duracao)+1;
-    id = id * pow(10, tam);
-    id += duracao;
-
-    return id;
-}
-
 void SetPrioridade(Compromisso* compromisso, int prioridade) {
     compromisso->prioridade = prioridade;
 }
@@ -69,7 +46,7 @@ int CheckConflict(Compromisso compromisso1, Compromisso compromisso2) {
 }
 
 void PrintCompromisso(Compromisso compromisso) {
-    printf("\nId: %ld\n", compromisso.id);
+    printf("\nId: %d\n", compromisso.id);
     printf("Prioridade: %d\n", compromisso.prioridade);
     printf("Data: %d/%d/%d\n", compromisso.dia, compromisso.mes, compromisso.ano);
     printf("Hora: %d\n", compromisso.hora);

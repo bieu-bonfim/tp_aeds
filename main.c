@@ -41,9 +41,9 @@ void TestCompromisso() {
 
     tam++;
     InicializarCompromisso(compromisso1, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
-    ListInsert(lista1, compromisso1);
+    CompListInsert(lista1, compromisso1);
 
-    ListPrint(lista1);
+    CompListPrint(lista1);
 
     int *prioridade_teste;
     int new_prioridade;
@@ -69,12 +69,38 @@ void TestAgenda() {
 
     agenda1 = (Agenda*) malloc(sizeof(Agenda));
 
-    int prioridade, ano, mes, dia, hora, duracao;
+    char id[10], nome[80];
+    int ano, opcao;
+
+    ListaAgendas *listaAgendas;
+    listaAgendas = (ListaAgendas*) malloc(sizeof(ListaAgendas));
+
+    ListaCompromissos *listaCompromissos;
+    listaCompromissos = (ListaCompromissos*) malloc(sizeof(ListaCompromissos));
+
+    printf("\n\nDigite qual sera seu identificador unico: ");
+    scanf("%s", id);
+
+    printf("\n\nAgora, digite seu nome: ");
+    scanf("%s", nome);
+
+    printf("\n\nAno da agenda: ");
+    scanf("%d", &ano);
+
+    InicializarAgenda(agenda1, listaCompromissos, id, nome, ano);
+    AgendaListInsert(listaAgendas, agenda1);
+
+    PrintAgenda(*agenda1);
+
+
+
+    Compromisso *compromisso1, *compromisso2;
+
+    compromisso1 = (Compromisso*) malloc(sizeof(Compromisso));
+    compromisso2 = (Compromisso*) malloc(sizeof(Compromisso));
+
+    int prioridade, mes, dia, hora, duracao;
     char descricao[100];
-
-    ListaAgendas *lista1;
-
-    lista1 = (ListaAgendas*) malloc(sizeof(ListaAgendas));
 
     printf("\nDigite uma descricao:  ");
     scanf("%[^\n]%*c", descricao);
@@ -93,27 +119,33 @@ void TestAgenda() {
 
     tam++;
     InicializarCompromisso(compromisso1, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
-    ListInsert(lista1, compromisso1);
+    CompListInsert(listaCompromissos, compromisso1);
 
-    ListPrint(lista1);
+    printf("\nDigite uma descricao:  ");
+    scanf("%[^\n]%*c", descricao);
+    printf("\nDigite uma prioridade:  ");
+    scanf("%d", &prioridade);
+    printf("\nDigite uma ano:  ");
+    scanf("%d", &ano);
+    printf("\nDigite uma mes:  ");
+    scanf("%d", &mes);
+    printf("\nDigite uma dia:  ");
+    scanf("%d", &dia);
+    printf("\nDigite uma hora:  ");
+    scanf("%d", &hora);
+    printf("\nDigite uma duracao:  ");
+    scanf("%d", &duracao);
 
-    int *prioridade_teste;
-    int new_prioridade;
+    tam++;
+    InicializarCompromisso(compromisso2, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
+    CompListInsert(listaCompromissos, compromisso2);
 
-    printf("\nDigite a nova prioridade: ");
-    scanf("%i", &new_prioridade);
+    CompListPrint(listaCompromissos);
 
-    prioridade_teste = (int*) malloc(sizeof(int));
 
-    GetPrioridade(*compromisso1, prioridade_teste);
+    AgendaListPrint(listaAgendas);
 
-    printf("Prioridade antiga: %d\n", *prioridade_teste);
 
-    SetPrioridade(compromisso1, new_prioridade);
-
-    GetPrioridade(*compromisso1, prioridade_teste);
-
-    printf("Prioridade nova: %d\n", *prioridade_teste);
 }
 
 void ReadFile () {
@@ -233,7 +265,9 @@ int main() {
 //
 //    MenuInicial(listaAgendas);
 
-    TestCompromisso();
+//    TestCompromisso();
+
+    TestAgenda();
 
 
 

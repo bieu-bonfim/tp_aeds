@@ -13,3 +13,7 @@ typedef struct {
 int FindById(ListaAgendas *lista, Agenda *agenda, char id[10]);
 
 int CheckId(ListaAgendas *lista, char id[10]);
+
+void AgendaListInsert(ListaAgendas * lista, Agenda * agenda);
+
+void AgendaListPrint(ListaAgendas * lista);

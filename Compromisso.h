@@ -1,5 +1,5 @@
 typedef struct {
-    long id;
+    int id;
     int prioridade;
     int dia, mes, ano;
     int hora, duracao;

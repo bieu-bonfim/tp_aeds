@@ -1,18 +1,18 @@
 #include "ListaCompromissos.h"
 #include <stdlib.h>
 
-void EmptyList(ListaCompromissos* lista)
+void CompEmptyList(ListaCompromissos* lista)
 {
     lista->primeiro = NULL;
     lista->ultimo = NULL;
 }
 
-int IsListEmpty(ListaCompromissos* lista)
+int CompIsListEmpty(ListaCompromissos* lista)
 {
     return (lista->ultimo == NULL);
 }
 
-void ListInsert(ListaCompromissos* lista, Compromisso* compromisso)
+void CompListInsert(ListaCompromissos* lista, Compromisso* compromisso)
 {
     if (lista->ultimo == NULL) {
         lista->ultimo = (CApontador) malloc(sizeof (CCelula));
@@ -25,10 +25,10 @@ void ListInsert(ListaCompromissos* lista, Compromisso* compromisso)
     lista->ultimo->prox = NULL;
 }
 
-int ListRetrieve(ListaCompromissos* lista, Compromisso* compromisso)
+int CompListRetrieve(ListaCompromissos* lista, Compromisso* compromisso)
 {
     CCelula* pAux;
-    if (IsListEmpty(lista))
+    if (CompIsListEmpty(lista))
         return 0;
     *compromisso = lista->primeiro->compromisso;
     pAux = lista->primeiro;
@@ -39,12 +39,15 @@ int ListRetrieve(ListaCompromissos* lista, Compromisso* compromisso)
     return 1;
 }
 
-void ListPrint(ListaCompromissos* lista)
+void CompListPrint(ListaCompromissos* lista)
 {
     CApontador aux;
     aux = lista->primeiro;
     while (aux != NULL)
     {
+        if (aux->compromisso.duracao == 0 || aux->compromisso.dia > 31) {
+            continue;
+        }
         PrintCompromisso(aux->compromisso);
         aux = aux->prox;
     }
