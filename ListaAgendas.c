@@ -1,13 +1,14 @@
 #include "ListaAgendas.h"
 #include <stdlib.h>
 #include "stdio.h"
+#include "string.h"
 
 int FindById(ListaAgendas *lista, Agenda *agenda, char id[10]) {
     AApontador aux;
     aux = lista->primeiro;
     while (aux != NULL)
     {
-        if(id[10] == *aux->agenda.id) {
+        if(!strcmp(aux->agenda.id, id)) {
             agenda = &aux->agenda;
             return 1;
         }
@@ -17,19 +18,17 @@ int FindById(ListaAgendas *lista, Agenda *agenda, char id[10]) {
 }
 
 int CheckId(ListaAgendas *lista, char id[10]) {
-
     AApontador aux;
     aux = lista->primeiro;
+    while (aux != NULL) {
 
-    while (aux != NULL)
-    {
+//        printf("teste %s", aux->agenda.id);
 
-        if(id == aux->agenda.id) {
+        if (!strcmp(aux->agenda.id, id)) {
             return 1;
         }
 
         aux = aux->prox;
-
     }
     return 0;
 }

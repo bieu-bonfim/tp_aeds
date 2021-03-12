@@ -7,6 +7,7 @@ int tam = 0;
 void TesteCompromisso();
 
 void ReadFile();
+
 void MenuInicial(ListaAgendas *listaAgendas);
 void MenuInterativo(ListaAgendas *listaAgendas);
 void MenuLogin (ListaAgendas *listaAgendas);
@@ -68,8 +69,8 @@ void TestAgenda() {
 
     InicializarAgenda(agenda1, listaCompromissos, id, nome, ano);
     AgendaListInsert(listaAgendas, agenda1);
-
-    TestCompromisso(agenda1);
+    PrintAgenda(*agenda1);
+//    TestCompromisso(agenda1);
 
 }
 
@@ -124,8 +125,9 @@ void MenuCreateAgenda (ListaAgendas *listaAgendas) {
     char id[10], nome[80];
     int ano, opcao;
 
-    Agenda *agenda = (Agenda*) malloc(sizeof (Agenda));
     ListaCompromissos *lista = (ListaCompromissos*) malloc(sizeof (ListaCompromissos));
+
+    Agenda agenda;
 
     printf("\n---------------------------------");
     printf("\n-- Voce escolheu  Criar Agenda --");
@@ -140,6 +142,8 @@ void MenuCreateAgenda (ListaAgendas *listaAgendas) {
     printf("\n\nAno da agenda: ");
     scanf("%d", &ano);
 
+// TODO: Verificar se há conflito com ID ja existente
+
     if (CheckId(listaAgendas, id)) {
         printf("\n\nO ID informado ja existe ");
         printf("\nDigite 1 para tentar novamente");
@@ -152,7 +156,7 @@ void MenuCreateAgenda (ListaAgendas *listaAgendas) {
         }
     }
 
-    InicializarAgenda(agenda, lista, id, nome, ano);
+    InicializarAgenda(&agenda, lista, id, nome, ano);
 
     printf("\n\nLembre-se, seu ID e: %s", id);
 
@@ -193,16 +197,6 @@ int main() {
 //    TestCompromisso();
 
 //    TestAgenda();
-
-
-
-
-
-
-
-
-
-
 
     return 0;
 }
