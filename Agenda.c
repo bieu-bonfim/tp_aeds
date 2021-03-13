@@ -10,7 +10,7 @@ void InicializarAgenda(Agenda* agenda, ListaCompromissos* lista, char id_prof[10
 }
 
 void PrintAgenda(Agenda agenda) {
-    printf("ID: %s\n", agenda.id);
+    printf("\n\nID: %s\n", agenda.id);
     printf("Professor: %s\n", agenda.nome);
     printf("Ano: %d\n", agenda.ano);
     CompListPrint(&agenda.compromissos);

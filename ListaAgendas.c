@@ -3,26 +3,31 @@
 #include "stdio.h"
 #include "string.h"
 
-int FindById(ListaAgendas *lista, Agenda *agenda, char id[10]) {
+void AgendaEmptyList(ListaAgendas * lista)
+{
+    lista->primeiro = (AApontador) malloc(sizeof (ACelula));
+    lista->ultimo = lista->primeiro;
+    lista->primeiro->prox = NULL;
+}
+
+Agenda FindById(ListaAgendas *lista, char id[10]) {
     AApontador aux;
-    aux = lista->primeiro;
+    Agenda agenda;
+    aux = lista->primeiro->prox;
     while (aux != NULL)
     {
         if(!strcmp(aux->agenda.id, id)) {
-            agenda = &aux->agenda;
-            return 1;
+            agenda = aux->agenda;
+            return agenda;
         }
         aux = aux->prox;
     }
-    return 0;
 }
 
 int CheckId(ListaAgendas *lista, char id[10]) {
     AApontador aux;
-    aux = lista->primeiro;
+    aux = lista->primeiro->prox;
     while (aux != NULL) {
-
-//        printf("teste %s", aux->agenda.id);
 
         if (!strcmp(aux->agenda.id, id)) {
             return 1;
@@ -34,13 +39,8 @@ int CheckId(ListaAgendas *lista, char id[10]) {
 }
 
 void AgendaListInsert(ListaAgendas * lista, Agenda * agenda) {
-    if (lista->ultimo == NULL) {
-        lista->ultimo = (AApontador) malloc(sizeof (ACelula));
-        lista->primeiro = lista->ultimo;
-    } else {
-        lista->ultimo->prox = (AApontador) malloc(sizeof (ACelula));
-        lista->ultimo = lista->ultimo->prox;
-    }
+    lista->ultimo->prox = (AApontador) malloc(sizeof(ACelula));
+    lista->ultimo = lista->ultimo->prox;
     lista->ultimo->agenda = *agenda;
     lista->ultimo->prox = NULL;
 }
@@ -48,7 +48,7 @@ void AgendaListInsert(ListaAgendas * lista, Agenda * agenda) {
 void AgendaListPrint(ListaAgendas* lista)
 {
     AApontador aux;
-    aux = lista->primeiro;
+    aux = lista->primeiro->prox;
     while (aux != NULL)
     {
         PrintAgenda(aux->agenda);

@@ -10,7 +10,9 @@ typedef struct {
     AApontador ultimo;
 } ListaAgendas;
 
-int FindById(ListaAgendas *lista, Agenda *agenda, char id[10]);
+void AgendaEmptyList(ListaAgendas * lista);
+
+Agenda FindById(ListaAgendas *lista, char id[10]);
 
 int CheckId(ListaAgendas *lista, char id[10]);
 
