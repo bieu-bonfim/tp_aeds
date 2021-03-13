@@ -2,18 +2,13 @@
 #include "string.h"
 #include "math.h"
 #include "stdio.h"
+#include "stdlib.h"
+
 
 int InicializarCompromisso(Compromisso* compromisso, int id, int prioridade,
                            int dia, int mes, int ano, int hora,
                            int duracao, char descricao[100]) {
 
-    int check_hora;
-
-    check_hora = (hora*60)+duracao;
-
-    if (check_hora > 1440) {
-        return 0;
-    }
 
     compromisso->prioridade = prioridade;
     compromisso->dia = dia;

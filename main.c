@@ -281,7 +281,16 @@ void MenuPrincipal(Agenda *agenda, ListaAgendas *listaAgendas) {
 
 }
 
-void MenuRemoverComp(Agenda *agenda, ListaAgendas *listaAgendas) {}
+void MenuRemoverComp(Agenda *agenda, ListaAgendas *listaAgendas) {
+    int tam;
+
+    printf("\n---------------------------------");
+    printf("\n------ Remover Compromisso ------");
+    printf("\n---------------------------------");
+
+    printf("\n\nDigite o ID do compromisso que deseja remover: ");
+    scanf("%d", tam);
+}
 void MenuAlterarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {}
 void MenuRetornarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {}
 void MenuPrintAgendaData(Agenda *agenda, ListaAgendas *listaAgendas) {}
@@ -317,13 +326,19 @@ void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
     printf("\nDigite a duracao:  ");
     scanf("%d", &duracao);
 
-    tam++;
-    result = InicializarCompromisso(&compromisso, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
-    if (result == 0) {
-        printf("\n\nA duracao do compromisso excede o dia");
-        printf("\npara o qual esta sendo marcado.");
-        printf("\npara o qual esta sendo marcado.");
-        printf("\nDigite 1 para tentar novamente");
+    result = 0;
+
+    int check_hora;
+
+    check_hora = (hora*60)+duracao;
+
+    if (check_hora <= 1439) {
+        tam++;
+        result = InicializarCompromisso(&compromisso, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
+    }else{
+        free(&compromisso);
+        printf("\n\nA duracao do compromisso excede o dia \npara o qual esta sendo marcado.");
+        printf("\n\nDigite 1 para tentar novamente");
         printf("\nDigite 0 para voltar ao menu principal");
 
         printf("\nOpcao escolhida: ");
@@ -333,13 +348,17 @@ void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
         } else if (opcao == 0) {
             MenuPrincipal(agenda, listaAgendas);
         }
+
     }
+
+
     CompListInsert(&agenda->compromissos, &compromisso);
     printf("\n\nCompromisso inserido com sucesso!");
-    printf("\nO ID do compromisso é: %d", result);
+    printf("\nO ID do compromisso eh: %d", result);
     CompListPrint(&agenda->compromissos);
     PrintAgenda(*agenda);
     AgendaListPrint(listaAgendas);
+    MenuPrincipal(agenda, listaAgendas);
 }
 
 
