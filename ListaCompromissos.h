@@ -19,3 +19,5 @@ void CompListInsert(ListaCompromissos* lista, Compromisso* compromisso);
 int CompListRetrieve(ListaCompromissos* lista, Compromisso* compromisso);
 
 void CompListPrint(ListaCompromissos* lista);
+
+void FindCompById(int id);

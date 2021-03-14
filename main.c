@@ -282,21 +282,52 @@ void MenuPrincipal(Agenda *agenda, ListaAgendas *listaAgendas) {
 }
 
 void MenuRemoverComp(Agenda *agenda, ListaAgendas *listaAgendas) {
-    int tam;
+    int id;
 
     printf("\n---------------------------------");
     printf("\n------ Remover Compromisso ------");
     printf("\n---------------------------------");
 
     printf("\n\nDigite o ID do compromisso que deseja remover: ");
-    scanf("%d", tam);
+    scanf("%d", &id);
 }
-void MenuAlterarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {}
-void MenuRetornarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {}
-void MenuPrintAgendaData(Agenda *agenda, ListaAgendas *listaAgendas) {}
-void MenuPrintarAgendaPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {}
-void MenuPrintQntCompromissos(Agenda *agenda, ListaAgendas *listaAgendas) {}
-void MenuPrintarComp(Agenda *agenda, ListaAgendas *listaAgendas) {}
+
+void MenuAlterarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {
+    printf("\n---------------------------------");
+    printf("\n------ Alterar  Prioridade ------");
+    printf("\n---------------------------------");
+}
+void MenuRetornarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {
+    printf("\n---------------------------------");
+    printf("\n------ Retornar Prioridade ------");
+    printf("\n---------------------------------");
+}
+void MenuPrintAgendaData(Agenda *agenda, ListaAgendas *listaAgendas) {
+    printf("\n-------- Imprimir Agenda --------");
+    printf("\n------- A Partir  da Data -------");
+    printf("\n---------------------------------");
+}
+void MenuPrintarAgendaPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {
+    printf("\n-------- Imprimir Agenda --------");
+    printf("\n-------- Por  Prioridade --------");
+    printf("\n---------------------------------");
+}
+void MenuPrintQntCompromissos(Agenda *agenda, ListaAgendas *listaAgendas) {
+    printf("\n------ Imprimir Quantidade ------");
+    printf("\n-------- De Compromissos --------");
+    printf("\n---------------------------------");
+}
+
+void MenuPrintarComp(Agenda *agenda, ListaAgendas *listaAgendas) {
+    int id;
+
+    printf("\n----- Imprimir  Compromisso -----");
+    printf("\n------------ Por  ID ------------");
+    printf("\n---------------------------------");
+
+    printf("\nDigite o ID do compromisso que deseja:  ");
+    scanf("%d", &id);
+}
 
 void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
     Compromisso compromisso;
@@ -335,8 +366,14 @@ void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
     if (check_hora <= 1439) {
         tam++;
         result = InicializarCompromisso(&compromisso, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
+        CompListInsert(&agenda->compromissos, &compromisso);
+        printf("\n\nCompromisso inserido com sucesso!");
+        printf("\nO ID do compromisso eh: %d", result);
+        CompListPrint(&agenda->compromissos);
+        PrintAgenda(*agenda);
+        AgendaListPrint(listaAgendas);
+        MenuPrincipal(agenda, listaAgendas);
     }else{
-        free(&compromisso);
         printf("\n\nA duracao do compromisso excede o dia \npara o qual esta sendo marcado.");
         printf("\n\nDigite 1 para tentar novamente");
         printf("\nDigite 0 para voltar ao menu principal");
@@ -348,17 +385,7 @@ void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
         } else if (opcao == 0) {
             MenuPrincipal(agenda, listaAgendas);
         }
-
     }
-
-
-    CompListInsert(&agenda->compromissos, &compromisso);
-    printf("\n\nCompromisso inserido com sucesso!");
-    printf("\nO ID do compromisso eh: %d", result);
-    CompListPrint(&agenda->compromissos);
-    PrintAgenda(*agenda);
-    AgendaListPrint(listaAgendas);
-    MenuPrincipal(agenda, listaAgendas);
 }
 
 
