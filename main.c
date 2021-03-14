@@ -376,6 +376,7 @@ void MenuAlterarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {
         MenuPrincipal(agenda, listaAgendas);
     }
 }
+
 void MenuRetornarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {
     int id, opcao, prioridade;
 
@@ -417,22 +418,77 @@ void MenuRetornarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {
         MenuPrincipal(agenda, listaAgendas);
     }
 }
+
 void MenuPrintAgendaData(Agenda *agenda, ListaAgendas *listaAgendas) {
+    int ano, mes, dia, opcao;
+
     printf("\n-------- Imprimir Agenda --------");
     printf("\n------- A Partir  da Data -------");
     printf("\n---------------------------------");
+
+    printf("\n\nDigite o ano:  ");
+    scanf("%d", &ano);
+    printf("\nDigite o mes:  ");
+    scanf("%d", &mes);
+    printf("\nDigite o dia:  ");
+    scanf("%d", &dia);
+
+    PrintByData(&agenda->compromissos, ano, mes, dia);
+
+    printf("\n\nSe quiser printar novamente, digite 1");
+    printf("\nCaso deseje voltar ao menu principal, digite 0");
+    printf("\nOpcao escolhida: ");
+    scanf("%d", &opcao);
+    if (opcao == 1) {
+        MenuPrintAgendaData(agenda, listaAgendas);
+    } else if (opcao == 0) {
+        MenuPrincipal(agenda, listaAgendas);
+    }
 }
 
 void MenuPrintarAgendaPrioridade(Agenda *agenda, ListaAgendas *listaAgendas) {
+    int opcao;
+
     printf("\n-------- Imprimir Agenda --------");
     printf("\n-------- Por  Prioridade --------");
     printf("\n---------------------------------");
+
+    printf("\n");
+
+    PrintByPriority(&agenda->compromissos);
+
+    printf("\n\nSe quiser printar novamente, digite 1");
+    printf("\nCaso deseje voltar ao menu principal, digite 0");
+    printf("\nOpcao escolhida: ");
+    scanf("%d", &opcao);
+    if (opcao == 1) {
+        MenuPrintarAgendaPrioridade(agenda, listaAgendas);
+    } else if (opcao == 0) {
+        MenuPrincipal(agenda, listaAgendas);
+    }
+
 }
 
 void MenuPrintQntCompromissos(Agenda *agenda, ListaAgendas *listaAgendas) {
+    int opcao, qnt;
+
     printf("\n------ Imprimir Quantidade ------");
     printf("\n-------- De Compromissos --------");
     printf("\n---------------------------------");
+
+    qnt = ReturnNCompromissos(&agenda->compromissos);
+
+    printf("\n\nA quantidade de compromissos em sua agenda e: %d", qnt);
+
+    printf("\n\nSe quiser verificar a quantidade novamente, digite 1");
+    printf("\nCaso deseje voltar ao menu principal, digite 0");
+    printf("\nOpcao escolhida: ");
+    scanf("%d", &opcao);
+    if (opcao == 1) {
+        MenuPrintQntCompromissos(agenda, listaAgendas);
+    } else if (opcao == 0) {
+        MenuPrincipal(agenda, listaAgendas);
+    }
 }
 
 void MenuPrintarComp(Agenda *agenda, ListaAgendas *listaAgendas) {
@@ -501,8 +557,6 @@ void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
     printf("\nDigite a duracao:  ");
     scanf("%d", &duracao);
 
-    result = 0;
-
     int check_hora;
 
     check_hora = (hora*60)+duracao;
@@ -513,7 +567,6 @@ void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
         CompListInsert(&agenda->compromissos, &compromisso);
         printf("\n\nCompromisso inserido com sucesso!");
         printf("\nO ID do compromisso eh: %d", result);
-        PrintAgenda(*agenda);
         MenuPrincipal(agenda, listaAgendas);
     }else{
         printf("\n\nA duracao do compromisso excede o dia \npara o qual esta sendo marcado.");
@@ -540,10 +593,6 @@ int main() {
     AgendaEmptyList(listaAgendas);
 
     MenuInicial(listaAgendas);
-
-//    TestCompromisso();
-
-//    TestAgenda();
 
     return 0;
 }

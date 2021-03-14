@@ -12,11 +12,7 @@ typedef struct {
 
 void CompEmptyList(ListaCompromissos* lista);
 
-int CompIsListEmpty(ListaCompromissos* lista);
-
 void CompListInsert(ListaCompromissos* lista, Compromisso* compromisso);
-
-int CompListRetrieve(ListaCompromissos* lista, Compromisso* compromisso);
 
 void CompListPrint(ListaCompromissos* lista);
 
@@ -25,3 +21,9 @@ Compromisso* FindCompById(ListaCompromissos *listaCompromissos, int id);
 int CheckCompId(ListaCompromissos *listaCompromissos, int id);
 
 void RemoveComp(ListaCompromissos *listaCompromissos, int id);
+
+void PrintByData(ListaCompromissos *lista, int ano, int mes, int dia);
+
+void PrintByPriority(ListaCompromissos *lista);
+
+int ReturnNCompromissos(ListaCompromissos *lista);

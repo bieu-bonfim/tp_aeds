@@ -15,3 +15,4 @@ void PrintAgenda(Agenda agenda) {
     printf("Ano: %d\n", agenda.ano);
     CompListPrint(&agenda.compromissos);
 }
+
