@@ -20,4 +20,8 @@ int CompListRetrieve(ListaCompromissos* lista, Compromisso* compromisso);
 
 void CompListPrint(ListaCompromissos* lista);
 
-void FindCompById(int id);
+Compromisso* FindCompById(ListaCompromissos *listaCompromissos, int id);
+
+int CheckCompId(ListaCompromissos *listaCompromissos, int id);
+
+void RemoveComp(ListaCompromissos *listaCompromissos, int id);

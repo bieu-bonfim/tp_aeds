@@ -14,7 +14,7 @@ void RetrieveAgenda(Agenda agenda, int ano, int mes, int dia);
 void InsertCompromisso(Agenda* agenda, int prioridade, int ano, int mes, int dia,
                        int hora, int duracao, char descricao[100]);
 
-void RemoveCompromisso(long id_compromisso);
+//void RemoveCompromisso(int id_compromisso);
 
 void PrintAgenda(Agenda agenda);
 

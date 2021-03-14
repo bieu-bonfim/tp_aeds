@@ -37,10 +37,10 @@ int CheckConflict(Compromisso compromisso1, Compromisso compromisso2) {
         inicio2 = compromisso2.hora * 60;
         fim1 = inicio1 + compromisso1.duracao;
         fim2 = inicio2 + compromisso2.duracao;
-        if (inicio1 > inicio2 && inicio1 < fim2) {
+        if (inicio1 >= inicio2 && inicio1 < fim2) {
             return 1;
         }
-        if (inicio2 > inicio1 && inicio2 < fim1) {
+        if (inicio2 >= inicio1 && inicio2 < fim1) {
             return 1;
         }
         return 0;
