@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "string.h"
 
+//Lista encadeada de Agenda
 void AgendaEmptyList(ListaAgendas * lista)
 {
     lista->primeiro = (AApontador) malloc(sizeof (ACelula));
@@ -55,3 +56,17 @@ void AgendaListPrint(ListaAgendas* lista)
         aux = aux->prox;
     }
 }
+
+void UpdateAgenda(ListaAgendas *listaAgendas, Agenda *agenda, char id[10]) {
+    AApontador aux;
+    aux = listaAgendas->primeiro->prox;
+    while (aux != NULL) {
+
+        if (!strcmp(aux->agenda.id, id)) {
+            aux->agenda = *agenda;
+        }
+
+        aux = aux->prox;
+    }
+}
+

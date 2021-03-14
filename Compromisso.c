@@ -4,7 +4,6 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-
 int InicializarCompromisso(Compromisso* compromisso, int id, int prioridade,
                            int dia, int mes, int ano, int hora,
                            int duracao, char descricao[100]) {

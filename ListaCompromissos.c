@@ -8,14 +8,6 @@ void CompEmptyList(ListaCompromissos* lista)
     lista->primeiro->prox = NULL;
 }
 
-void CompListInsert(ListaCompromissos* lista, Compromisso* compromisso)
-{
-    lista->ultimo->prox = (CApontador) malloc(sizeof(CCelula));
-    lista->ultimo = lista->ultimo->prox;
-    lista->ultimo->compromisso = *compromisso;
-    lista->ultimo->prox = NULL;
-}
-
 void CompListPrint(ListaCompromissos* lista)
 {
     CApontador aux;
@@ -55,49 +47,7 @@ int CheckCompId(ListaCompromissos *listaCompromissos, int id) {
     return 0;
 }
 
-void RemoveComp(ListaCompromissos *listaCompromissos, int id) {
-    CCelula* celAux;
-    CApontador apoAux;
-    int cont1 = 0, cont2 = 0;
-    apoAux = listaCompromissos->primeiro->prox;
 
-    while (apoAux != NULL) {
-
-        if (id == apoAux->compromisso.id) {
-            break;
-        }
-        cont1++;
-        apoAux = apoAux->prox;
-    }
-    apoAux = listaCompromissos->primeiro;
-    while (cont2 <= cont1) {
-        if (cont1 == cont2) {
-            if (apoAux->prox->prox == NULL) {
-                celAux = apoAux->prox;
-                apoAux->prox = NULL;
-            } else {
-                celAux = apoAux->prox;
-                apoAux->prox = apoAux->prox->prox;
-            }
-        }
-        cont2++;
-        apoAux = apoAux->prox;
-    }
-    free(celAux);
-}
-
-void PrintByData(ListaCompromissos *lista, int ano, int mes, int dia) {
-    CApontador aux;
-    aux = lista->primeiro->prox;
-    while (aux != NULL) {
-
-        if (aux->compromisso.ano >= ano && aux->compromisso.mes >= mes && aux->compromisso.dia >= dia) {
-            PrintCompromisso(aux->compromisso);
-        }
-
-        aux = aux->prox;
-    }
-}
 
 void PrintByPriority(ListaCompromissos *lista) {
     CApontador aux;
@@ -145,6 +95,45 @@ void PrintByPriority(ListaCompromissos *lista) {
         PrintCompromisso(p1[cont1]);
         cont1--;
     }
+}
+
+void CompListInsert(ListaCompromissos* lista, Compromisso* compromisso)
+{
+    lista->ultimo->prox = (CApontador) malloc(sizeof(CCelula));
+    lista->ultimo = lista->ultimo->prox;
+    lista->ultimo->compromisso = *compromisso;
+    lista->ultimo->prox = NULL;
+}
+
+void RemoveComp(ListaCompromissos *listaCompromissos, int id) {
+    CCelula* celAux;
+    CApontador apoAux;
+    int cont1 = 0, cont2 = 0;
+    apoAux = listaCompromissos->primeiro->prox;
+
+    while (apoAux != NULL) {
+
+        if (id == apoAux->compromisso.id) {
+            break;
+        }
+        cont1++;
+        apoAux = apoAux->prox;
+    }
+    apoAux = listaCompromissos->primeiro;
+    while (cont2 <= cont1) {
+        if (cont1 == cont2) {
+            if (apoAux->prox->prox == NULL) {
+                celAux = apoAux->prox;
+                apoAux->prox = NULL;
+            } else {
+                celAux = apoAux->prox;
+                apoAux->prox = apoAux->prox->prox;
+            }
+        }
+        cont2++;
+        apoAux = apoAux->prox;
+    }
+    free(celAux);
 }
 
 int ReturnNCompromissos(ListaCompromissos *lista) {

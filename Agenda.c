@@ -13,6 +13,24 @@ void PrintAgenda(Agenda agenda) {
     printf("\n\nID: %s\n", agenda.id);
     printf("Professor: %s\n", agenda.nome);
     printf("Ano: %d\n", agenda.ano);
-    CompListPrint(&agenda.compromissos);
 }
 
+void NFromData(Agenda *agenda, int ano, int mes, int dia) {
+    CApontador aux;
+    aux = agenda->compromissos.primeiro->prox;
+    PrintAgenda(*agenda);
+    int cont = 0;
+    while (aux != NULL) {
+
+        if (aux->compromisso.ano >= ano && aux->compromisso.mes >= mes && aux->compromisso.dia >= dia) {
+            cont++;
+        }
+
+        aux = aux->prox;
+    }
+    printf("\nNumero de compromissos apos %d/%d/%d: %d", dia, mes, ano, cont);
+}
+
+void CreatePerfil(Agenda *agenda, Perfil perfil) {
+    agenda->perfil = perfil;
+}

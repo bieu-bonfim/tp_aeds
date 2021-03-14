@@ -2,29 +2,79 @@
 #include <stdlib.h>
 #include "ListaAgendas.h"
 
+// Variável usada para criação do ID de compromissos
 int tam = 0;
-
-void TesteCompromisso();
 
 void ReadFile();
 
+// --- Cabeçalhos das Funções Menu Interativo --- //
+
+// Primeiro Menu do sistema
+// Escolha de tipo de interação
 void MenuInicial(ListaAgendas *listaAgendas);
+
+// Primeira fase do Menu Interativo
+// Login ou criação de agenda
 void MenuInterativo(ListaAgendas *listaAgendas);
+
+// Menu de Login dos professores
 void MenuLogin (ListaAgendas *listaAgendas);
+
+// Menu de criação de Agendas
 void MenuCreateAgenda (ListaAgendas *listaAgendas);
+
+// Menu Principal do Sistema
+// Oferece todas as opções para um usuário logado
 void MenuPrincipal(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu de inserção de compromissos
 void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu de remoção de compromissos por ID
 void MenuRemoverComp(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu de alteração de prioridades de compromissos
 void MenuAlterarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu de retorno de prioridade
 void MenuRetornarPrioridade(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu de impressão de compromissos
 void MenuPrintarComp(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu de impressão de agenda de acordo com as datas
 void MenuPrintAgendaData(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu que imprime todos os compromissos de uma agenda por ordem de prioridade
 void MenuPrintarAgendaPrioridade(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu que imprime a quantidade de compromissos
 void MenuPrintQntCompromissos(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu para verificar se há conflito entre dois compromissos
 void MenuChecarConflito(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu para informações de perfil do professor
+void MenuPerfil(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu para informações de perfil do professor
+void MenuCreatePerfil(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu de alteração do email do professor
+void MenuAlterarEmail(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu de alteração do aniversário do professor
+void MenuAlterarAniversario(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu de alteração do endereço do professor
+void MenuAlterarEndereco(Agenda *agenda, ListaAgendas *listaAgendas);
+
+// Menu de impressão do endereço do professor
+void MenuPrintarEndereco(Agenda *agenda, ListaAgendas *listaAgendas);
 
 // ------------------------------------------------------------------------ //
 
+// --- Implementação dos Menus --- //
 void ReadFile () {
 
 }
@@ -113,7 +163,7 @@ void MenuLogin (ListaAgendas *listaAgendas) {
 void MenuCreateAgenda (ListaAgendas *listaAgendas) {
     char id[10], nome[80];
     int ano, opcao;
-
+    Perfil perfil;
     ListaCompromissos lista;
     CompEmptyList(&lista);
     Agenda agenda;
@@ -149,7 +199,6 @@ void MenuCreateAgenda (ListaAgendas *listaAgendas) {
     AgendaListInsert(listaAgendas, &agenda);
 
     printf("\n\nLembre-se, seu ID e: %s", id);
-    PrintAgenda(agenda);
 
     MenuLogin(listaAgendas);
 
@@ -171,10 +220,11 @@ void MenuPrincipal(Agenda *agenda, ListaAgendas *listaAgendas) {
     printf("\n-> Alterar Prioridade (Digite 3)");
     printf("\n-> Retornar Prioridade (Digite 4)");
     printf("\n-> Printar Compromisso pelo ID (Digite 5)");
-    printf("\n-> Printar Agenda a Partir de Data (Digite 6)");
+    printf("\n-> Printar Quantidade de Compromissos Apos Data (Digite 6)");
     printf("\n-> Printar Agenda por Prioridade (Digite 7)");
     printf("\n-> Printar Quantidade de Compromissos (Digite 8)");
     printf("\n-> Checar Conflito Entre Compromissos (Digite 9)");
+    printf("\n-> Visualizar Perfil de Professor (Digite 10)");
     printf("\n-> Fazer Logoff (Digite 0)");
 
     printf("\n\nOpcao escolhida: ");
@@ -215,6 +265,10 @@ void MenuPrincipal(Agenda *agenda, ListaAgendas *listaAgendas) {
 
         case 9:
             MenuChecarConflito(agenda, listaAgendas);
+            break;
+
+        case 10:
+            MenuPerfil(agenda, listaAgendas);
             break;
 
         case 0:
@@ -433,7 +487,7 @@ void MenuPrintAgendaData(Agenda *agenda, ListaAgendas *listaAgendas) {
     printf("\nDigite o dia:  ");
     scanf("%d", &dia);
 
-    PrintByData(&agenda->compromissos, ano, mes, dia);
+    NFromData(agenda, ano, mes, dia);
 
     printf("\n\nSe quiser printar novamente, digite 1");
     printf("\nCaso deseje voltar ao menu principal, digite 0");
@@ -566,7 +620,7 @@ void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
         result = InicializarCompromisso(&compromisso, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
         CompListInsert(&agenda->compromissos, &compromisso);
         printf("\n\nCompromisso inserido com sucesso!");
-        printf("\nO ID do compromisso eh: %d", result);
+        printf("\nO ID do compromisso eh: %d\n", result);
         MenuPrincipal(agenda, listaAgendas);
     }else{
         printf("\n\nA duracao do compromisso excede o dia \npara o qual esta sendo marcado.");
@@ -583,7 +637,206 @@ void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
     }
 }
 
+void MenuPerfil(Agenda *agenda, ListaAgendas *listaAgendas) {
+    int opcao;
+    printf("\n\n---------------------------------");
+    printf("\n---------- Seu  Perfil ----------");
+    printf("\n---------------------------------");
 
+
+
+    printf("\n\nEscolha uma das seguintes opcoes:");
+    if (!agenda->perfil.ano) {
+        printf("\n\n-> Criar Perfil (Digite 9)");
+    } else {
+        printf("\n");
+        PrintPerfil(agenda->perfil);
+        printf("\n\n-> Alterar Email (Digite 1)");
+        printf("\n-> Alterar Aniversario (Digite 2)");
+        printf("\n-> Alterar Endereco (Digite 3)");
+        printf("\n-> Imprimir Endereco (Digite 4)");
+    }
+    printf("\n-> Voltar (Digite 0)");
+
+    printf("\nOpcao escolhida: ");
+    scanf("%d", &opcao);
+    if (opcao == 9) {
+        MenuCreatePerfil(agenda, listaAgendas);
+    } else if (opcao == 0) {
+        MenuPrincipal(agenda, listaAgendas);
+    } else if (opcao == 1) {
+        MenuAlterarEmail(agenda, listaAgendas);
+    } else if (opcao == 2) {
+        MenuAlterarAniversario(agenda, listaAgendas);
+    } else if (opcao == 3) {
+        MenuAlterarEndereco(agenda, listaAgendas);
+    } else if (opcao == 4) {
+        MenuPrintarEndereco(agenda, listaAgendas);
+    }
+}
+
+void MenuCreatePerfil(Agenda *agenda, ListaAgendas *listaAgendas) {
+    int opcao, ano, mes, dia, numero, cep;
+    char email[80], rua[30], bairro[30], cidade[30];
+
+    Perfil perfil;
+    Endereco endereco;
+
+    printf("\n\n---------------------------------");
+    printf("\n--------- Criar  Perfil ---------");
+    printf("\n---------------------------------");
+
+    printf("\n\nDigite o email:  ");
+    scanf("%s", email);
+    printf("\nDigite o ano de nascimento:  ");
+    scanf("%d", &ano);
+    printf("\nDigite o mes de nascimento:  ");
+    scanf("%d", &mes);
+    printf("\nDigite o dia de nascimento:  ");
+    scanf("%d", &dia);
+    printf("\nDigite o rua:  ");
+    scanf("%s", rua);
+    printf("\nDigite o numero:  ");
+    scanf("%d", &numero);
+    printf("\nDigite o bairro:  ");
+    scanf("%s", bairro);
+    printf("\nDigite a cidade:  ");
+    scanf("%s", cidade);
+    printf("\nDigite o cep:  ");
+    scanf("%d", &cep);
+
+    InicializarEndereco(&endereco, rua, numero, cep, bairro, cidade);
+    InicializarPerfil(&perfil, email, ano, mes, dia, endereco);
+    CreatePerfil(agenda, perfil);
+
+    printf("\n\nPerfil criado com sucesso!\n");
+
+    PrintPerfil(agenda->perfil);
+    UpdateAgenda(listaAgendas, agenda, agenda->id);
+
+    printf("\n\nDigite 0 para voltar ao menu de perfil");
+    printf("\n\nOpcao escolhida: ");
+    scanf("%d", &opcao);
+    if (opcao == 0) {
+        MenuPerfil(agenda, listaAgendas);
+    }
+}
+
+void MenuAlterarEmail(Agenda *agenda, ListaAgendas *listaAgendas) {
+    int opcao;
+    char email[80];
+
+    Compromisso *compromisso;
+
+    printf("\n---------------------------------");
+    printf("\n--------- Alterar Email ---------");
+    printf("\n---------------------------------");
+
+    printf("\n\nDigite o novo email do seu perfil: ");
+    scanf("%s", email);
+
+    PrintPerfil(agenda->perfil);
+    SetEmail(&agenda->perfil, email);
+    PrintPerfil(agenda->perfil);
+
+    printf("\nEmail alterado com sucesso!");
+    printf("\nSe quiser alterar novamente, digite 1");
+    printf("\nCaso deseje voltar ao menu principal, digite 0");
+    printf("\nOpcao escolhida: ");
+    scanf("%d", &opcao);
+    if (opcao == 1) {
+        MenuAlterarEmail(agenda, listaAgendas);
+    } else if (opcao == 0) {
+        MenuPerfil(agenda, listaAgendas);
+    }
+}
+
+void MenuAlterarAniversario(Agenda *agenda, ListaAgendas *listaAgendas) {
+    int ano, mes, dia, opcao, prioridade;
+
+    Compromisso *compromisso;
+
+    printf("\n---------------------------------");
+    printf("\n------ Alterar Aniversario ------");
+    printf("\n---------------------------------");
+
+    printf("\nDigite o ano:  ");
+    scanf("%d", &ano);
+    printf("\nDigite o mes:  ");
+    scanf("%d", &mes);
+    printf("\nDigite o dia:  ");
+    scanf("%d", &dia);
+
+    SetAniversario(&agenda->perfil, ano, mes, dia);
+
+    printf("\nAniversario alterado com sucesso!");
+    printf("\nSe quiser alterar novamente, digite 1");
+    printf("\nCaso deseje voltar ao menu principal, digite 0");
+    printf("\nOpcao escolhida: ");
+    scanf("%d", &opcao);
+    if (opcao == 1) {
+        MenuAlterarEmail(agenda, listaAgendas);
+    } else if (opcao == 0) {
+        MenuPerfil(agenda, listaAgendas);
+    }
+}
+
+void MenuAlterarEndereco(Agenda *agenda, ListaAgendas *listaAgendas){
+    int opcao, numero, cep;
+    char rua[30], bairro[30], cidade[30];
+
+    Endereco endereco;
+
+    printf("\n---------------------------------");
+    printf("\n------- Alterar  Endereco -------");
+    printf("\n---------------------------------");
+
+    printf("\nDigite o rua:  ");
+    scanf("%s", rua);
+    printf("\nDigite o numero:  ");
+    scanf("%d", &numero);
+    printf("\nDigite o bairro:  ");
+    scanf("%s", bairro);
+    printf("\nDigite a cidade:  ");
+    scanf("%s", cidade);
+    printf("\nDigite o cep:  ");
+    scanf("%d", &cep);
+
+    InicializarEndereco(&endereco, rua, numero, cep, bairro, cidade);
+    agenda->perfil.endereco = endereco;
+    UpdateAgenda(listaAgendas, agenda, agenda->id);
+
+    printf("\n\nEndereco alterado com sucesso");
+    printf("\n\nSe quiser alterar novamente, digite 1");
+    printf("\nCaso deseje voltar ao menu principal, digite 0");
+    printf("\nOpcao escolhida: ");
+    scanf("%d", &opcao);
+    if (opcao == 1) {
+        MenuAlterarEndereco(agenda, listaAgendas);
+    } else if (opcao == 0) {
+        MenuPerfil(agenda, listaAgendas);
+    }
+}
+
+void MenuPrintarEndereco(Agenda *agenda, ListaAgendas *listaAgendas){
+    int opcao;
+
+    printf("\n---------------------------------");
+    printf("\n------- Imprimir Endereco -------");
+    printf("\n---------------------------------\n");
+
+    PrintEndereco(agenda->perfil.endereco);
+
+    printf("\nSe quiser imprimir novamente, digite 1");
+    printf("\nCaso deseje voltar ao menu principal, digite 0");
+    printf("\nOpcao escolhida: ");
+    scanf("%d", &opcao);
+    if (opcao == 1) {
+        MenuPrintarEndereco(agenda, listaAgendas);
+    } else if (opcao == 0) {
+        MenuPerfil(agenda, listaAgendas);
+    }
+}
 
 int main() {
 
@@ -596,4 +849,3 @@ int main() {
 
     return 0;
 }
-
