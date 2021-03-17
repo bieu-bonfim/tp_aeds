@@ -75,7 +75,45 @@ void MenuPrintarEndereco(Agenda *agenda, ListaAgendas *listaAgendas);
 // ------------------------------------------------------------------------ //
 
 // --- Implementação dos Menus --- //
-void ReadFile () {
+void ReadFile (ListaAgendas *listaAgendas) {
+
+    FILE *pfile;
+    char nome_arquivo[] = "teste.txt", conteudo[20];
+
+    printf("\n---------------------------------");
+    printf("\n------ Leitura de Arquivo -------");
+    printf("\n---------------------------------");
+
+
+    pfile = fopen(nome_arquivo, "r");
+
+    if (pfile == NULL) {
+        printf("\nerror");
+    }
+
+    fclose(pfile);
+
+
+    FILE *pont_arq;
+    char texto_str[20];
+
+    //abrindo o arquivo_frase em modo "somente leitura"
+    pont_arq = fopen("teste.txt", "r");
+
+    if(pont_arq == NULL)
+    {
+      printf("Erro na abertura do arquivo!");
+    }
+
+    //enquanto não for fim de arquivo o looping será executado
+    //e será impresso o texto
+    while(fgets(texto_str, 20, pont_arq) != NULL)
+        printf("%s", texto_str);
+
+    //fechando o arquivo
+    fclose(pont_arq);
+
+
 
 }
 
@@ -97,7 +135,7 @@ void MenuInicial(ListaAgendas *listaAgendas) {
     if (metodo == 1) {
         MenuInterativo(listaAgendas);
     } else if (metodo == 2) {
-        ReadFile();
+        ReadFile(listaAgendas);
     } else if (metodo == 0) {
         system("PAUSE");
     }
