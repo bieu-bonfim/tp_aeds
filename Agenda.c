@@ -13,6 +13,7 @@ void PrintAgenda(Agenda agenda) {
     printf("\n\nID: %s\n", agenda.id);
     printf("Professor: %s\n", agenda.nome);
     printf("Ano: %d\n", agenda.ano);
+    CompListPrint(&agenda.compromissos);
 }
 
 void NFromData(Agenda *agenda, int ano, int mes, int dia) {

@@ -3,13 +3,13 @@ typedef struct {
     int id;
     int prioridade;
     int dia, mes, ano;
-    int hora, duracao;
+    int hora, minuto, duracao;
     char descricao[100];
 } Compromisso;
 
 // Função que inicializa um compromisso
 int InicializarCompromisso(Compromisso* compromisso, int id, int prioridade,
-                            int dia, int mes, int ano, int hora,
+                            int dia, int mes, int ano, int hora, int minuto,
                             int duracao, char descricao[100]);
 
 // Altera um compromisso

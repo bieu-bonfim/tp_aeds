@@ -75,44 +75,150 @@ void MenuPrintarEndereco(Agenda *agenda, ListaAgendas *listaAgendas);
 // ------------------------------------------------------------------------ //
 
 // --- Implementação dos Menus --- //
+
 void ReadFile (ListaAgendas *listaAgendas) {
 
     FILE *pfile;
-    char nome_arquivo[] = "teste.txt", conteudo[20];
+    char nome_arquivo[30], conteudo[50];
+    int contProf = 0, contComp = 0, contDadosProf = 3, contDadosComp = 8, inter1 = 0, inter2 = 0;
+
+    char id[10], nome[80];
+    int anoAgenda;
+
+    int prioridade, dia, mes, ano, hora, minuto, duracao;
+    char descricao[100];
+
+    int opcao;
+
+    Agenda *agenda = (Agenda*) malloc(sizeof (Agenda));
+
 
     printf("\n---------------------------------");
     printf("\n------ Leitura de Arquivo -------");
     printf("\n---------------------------------");
 
+    printf("\n\nDigite o nome do arquivo, caso esteja na mesma pasta q o arquivo main.c, coloque ../ antes do nome: ");
+//    scanf("%s", nome_arquivo);
 
-    pfile = fopen(nome_arquivo, "r");
+    pfile = fopen("../teste.txt", "r");
 
-    if (pfile == NULL) {
-        printf("\nerror");
+    while(1==1) {
+        printf("\nPROF: %d\nCOMPRO: %d\nINTER: %d\n", contProf, contComp, inter1);
+
+        if (contProf == 0 && contComp == 0 && inter1 == 1) {
+            break;
+        }
+        if (contProf == 0 && contComp == 0 && inter1 == 0) {
+            fscanf(pfile, "%d", &contProf);
+            printf("%d", contProf);
+            inter1++;
+            continue;
+        }
+        if (contComp == 0) {
+            fscanf(pfile, "%d", &contComp);
+            printf("%d", contComp);
+            if (inter2 == 1) {
+                contProf--;
+                contDadosProf = 3;
+                inter2 = 0;
+                continue;
+            }
+            inter2++;
+            continue;
+        }
+        if (contProf > 0) {
+
+            if (contDadosProf == 3) {
+                printf("\nprof %d\n", contProf);
+                fscanf(pfile, "%s", id);
+                printf("%s", id);
+                contDadosProf--;
+                continue;
+            } else if (contDadosProf == 2) {
+                fscanf(pfile, "%s", nome);
+                printf("%s", nome);
+                contDadosProf--;
+                continue;
+            } else if (contDadosProf == 1) {
+                ListaCompromissos lista;
+                CompEmptyList(&lista);
+                fscanf(pfile, "%d", &anoAgenda);
+                printf("%d", anoAgenda);
+                contDadosProf--;
+                InicializarAgenda(agenda, &lista, id, nome, anoAgenda);
+                AgendaListInsert(listaAgendas, agenda);
+                continue;
+            }
+            if (contComp > 0) {
+                if (contDadosComp == 8) {
+                    printf("\ncompromisso numero %d do prof %d\n", contComp, contProf);
+                    fscanf(pfile, "%d", &prioridade);
+                    printf("%d", prioridade);
+                    contDadosComp--;
+                    continue;
+                } else if (contDadosComp == 7) {
+                    fscanf(pfile, "%d", &dia);
+                    printf("%d", dia);
+                    contDadosComp--;
+                    continue;
+                } else if (contDadosComp == 6) {
+                    fscanf(pfile, "%d", &mes);
+                    printf("%d", mes);
+                    contDadosComp--;
+                    continue;
+                } else if (contDadosComp == 5) {
+                    fscanf(pfile, "%d", &ano);
+                    printf("%d", ano);
+                    contDadosComp--;
+                    continue;
+                } else if (contDadosComp == 4) {
+                    fscanf(pfile, "%d", &hora);
+                    printf("%d", hora);
+                    contDadosComp--;
+                    continue;
+                } else if (contDadosComp == 3) {
+                    fscanf(pfile, "%d", &minuto);
+                    printf("%d", minuto);
+                    contDadosComp--;
+                    continue;
+                } else if (contDadosComp == 2) {
+                    fscanf(pfile, "%d", &duracao);
+                    printf("%d", duracao);
+                    contDadosComp--;
+                    continue;
+                } else if (contDadosComp == 1) {
+                    Compromisso compromisso;
+                    fscanf(pfile, "%s", descricao);
+                    printf("%s", descricao);
+                    tam++;
+                    InicializarCompromisso(&compromisso, tam, prioridade, dia, mes, ano, hora, minuto, duracao, descricao);
+                    PrintCompromisso(compromisso);
+                    CompListInsert(&agenda->compromissos, &compromisso);
+                    PrintAgenda(*agenda);
+                    contComp--;
+                    contDadosComp = 8;
+                }
+            }
+        }
+
+
+
     }
 
-    fclose(pfile);
+    printf("Insercoes:\n");
+    AgendaListPrint(listaAgendas);
 
+    printf("\n\nArquivo lido e insercao completa. ");
+    printf("\nDigite 1 para ler outro arquivo");
+    printf("\nDigite 0 para voltar ao menu inicial");
 
-    FILE *pont_arq;
-    char texto_str[20];
-
-    //abrindo o arquivo_frase em modo "somente leitura"
-    pont_arq = fopen("teste.txt", "r");
-
-    if(pont_arq == NULL)
-    {
-      printf("Erro na abertura do arquivo!");
+    printf("\nOpcao escolhida: ");
+    scanf("%d", &opcao);
+    if (opcao == 1) {
+        ReadFile(listaAgendas);
+    } else if (opcao == 0) {
+        MenuInicial(listaAgendas);
     }
-
-    //enquanto não for fim de arquivo o looping será executado
-    //e será impresso o texto
-    while(fgets(texto_str, 20, pont_arq) != NULL)
-        printf("%s", texto_str);
-
-    //fechando o arquivo
-    fclose(pont_arq);
-
 
 
 }
@@ -624,7 +730,7 @@ void MenuPrintarComp(Agenda *agenda, ListaAgendas *listaAgendas) {
 void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
     Compromisso compromisso;
 
-    int prioridade, ano, mes, dia, hora, duracao;
+    int prioridade, ano, mes, dia, hora, minuto, duracao;
     char descricao[100];
 
     int result, opcao;
@@ -635,7 +741,6 @@ void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
 
     printf("\n\nDigite a descricao:  ");
     scanf("%s", descricao);
-//    scanf("%[^\n]%*c", descricao);
     printf("\nDigite a prioridade:  ");
     scanf("%d", &prioridade);
     printf("\nDigite o ano:  ");
@@ -646,16 +751,18 @@ void MenuInserirComp(Agenda *agenda, ListaAgendas *listaAgendas) {
     scanf("%d", &dia);
     printf("\nDigite a hora:  ");
     scanf("%d", &hora);
+    printf("\nDigite a minuto:  ");
+    scanf("%d", &minuto);
     printf("\nDigite a duracao:  ");
     scanf("%d", &duracao);
 
     int check_hora;
 
-    check_hora = (hora*60)+duracao;
+    check_hora = (hora*60)+duracao+minuto;
 
     if (check_hora <= 1439) {
         tam++;
-        result = InicializarCompromisso(&compromisso, tam, prioridade, dia, mes, ano, hora, duracao, descricao);
+        result = InicializarCompromisso(&compromisso, tam, prioridade, dia, mes, ano, hora, minuto, duracao, descricao);
         CompListInsert(&agenda->compromissos, &compromisso);
         printf("\n\nCompromisso inserido com sucesso!");
         printf("\nO ID do compromisso eh: %d\n", result);

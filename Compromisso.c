@@ -5,7 +5,7 @@
 #include "stdlib.h"
 
 int InicializarCompromisso(Compromisso* compromisso, int id, int prioridade,
-                           int dia, int mes, int ano, int hora,
+                           int dia, int mes, int ano, int hora, int minuto,
                            int duracao, char descricao[100]) {
 
 
@@ -14,6 +14,7 @@ int InicializarCompromisso(Compromisso* compromisso, int id, int prioridade,
     compromisso->mes = mes;
     compromisso->ano = ano;
     compromisso->hora = hora;
+    compromisso->minuto = minuto;
     compromisso->duracao = duracao;
     strcpy(compromisso->descricao, descricao);
     compromisso->id = id;
@@ -32,8 +33,8 @@ void GetPrioridade(Compromisso compromisso, int *prioridade) {
 int CheckConflict(Compromisso compromisso1, Compromisso compromisso2) {
     int inicio1, inicio2, fim1, fim2;
     if (compromisso1.ano == compromisso2.ano && compromisso1.mes == compromisso2.mes && compromisso1.dia == compromisso2.dia) {
-        inicio1 = compromisso1.hora * 60;
-        inicio2 = compromisso2.hora * 60;
+        inicio1 = compromisso1.hora * 60 + compromisso1.minuto;
+        inicio2 = compromisso2.hora * 60 + compromisso2.minuto;
         fim1 = inicio1 + compromisso1.duracao;
         fim2 = inicio2 + compromisso2.duracao;
         if (inicio1 >= inicio2 && inicio1 < fim2) {
@@ -52,6 +53,7 @@ void PrintCompromisso(Compromisso compromisso) {
     printf("Prioridade: %d\n", compromisso.prioridade);
     printf("Data: %d/%d/%d\n", compromisso.dia, compromisso.mes, compromisso.ano);
     printf("Hora: %d\n", compromisso.hora);
+    printf("Minuto: %d\n", compromisso.minuto);
     printf("Duracao: %d\n", compromisso.duracao);
     printf("Descricao: %s\n", compromisso.descricao);
 }
