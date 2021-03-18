@@ -2,9 +2,12 @@
 #include <stdlib.h>
 #include "ListaAgendas.h"
 
+// As entradas de string no código devem ser feitas sem barra de espaço para o funcionamento
+
 // Variável usada para criação do ID de compromissos
 int tam = 0;
 
+// Menu de Leitura de Arquivo
 void ReadFile();
 
 // --- Cabeçalhos das Funções Menu Interativo --- //
@@ -76,6 +79,7 @@ void MenuPrintarEndereco(Agenda *agenda, ListaAgendas *listaAgendas);
 
 // --- Implementação dos Menus --- //
 
+// Menu que implementa a funcionalidade de leitura de arquivo para popular o código
 void ReadFile (ListaAgendas *listaAgendas) {
 
     FILE *pfile;
@@ -98,10 +102,11 @@ void ReadFile (ListaAgendas *listaAgendas) {
     printf("\n---------------------------------");
 
     printf("\n\nDigite o nome do arquivo, caso esteja na mesma pasta q o arquivo main.c, coloque ../ antes do nome: ");
-//    scanf("%s", nome_arquivo);
+    scanf("%s", nome_arquivo);
 
-    pfile = fopen("../teste.txt", "r");
+    pfile = fopen(nome_arquivo, "r");
 
+    // Iteração linha a linha do arquivo com condições de preenchimento das variáveis
     while(1==1) {
         printf("\nPROF: %d\nCOMPRO: %d\nINTER: %d\n", contProf, contComp, inter1);
 
