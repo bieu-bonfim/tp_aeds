@@ -20,4 +20,5 @@ void PrintAgenda(Agenda agenda);
 // após a data informada
 void NFromData(Agenda *agenda, int ano, int mes, int dia);
 
+// Cria um perfil para o professor
 void CreatePerfil(Agenda *agenda, Perfil perfil);

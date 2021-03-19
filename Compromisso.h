@@ -12,10 +12,10 @@ int InicializarCompromisso(Compromisso* compromisso, int id, int prioridade,
                             int dia, int mes, int ano, int hora, int minuto,
                             int duracao, char descricao[100]);
 
-// Altera um compromisso
+// Altera a prioridade de um compromisso
 void SetPrioridade(Compromisso* compromisso, int prioridade);
 
-// Retorna um compromisso
+// Retorna a prioridade de um compromisso
 void GetPrioridade(Compromisso compromisso, int *prioridade);
 
 // Função que verifica se o compromisso tem conflito
